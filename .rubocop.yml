@@ -1,0 +1,27 @@
+require: 
+  - rubocop-rails
+AllCops:
+  TargetRubyVersion: 3.1.2
+  TargetRailsVersion: 7.0.4
+  Exclude:
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
+    - 'vendor/bundle/**/*'
+    - 'bin/**/*'
+    
+Layout/LineLength:
+  Max: 150
+  
+Metrics/MethodLength:
+  Max: 23
+
+Metrics/BlockLength:
+  Exclude:
+    - config/**/*
+    - spec/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
