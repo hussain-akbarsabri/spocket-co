@@ -12,7 +12,7 @@ class CreateAddresses < ActiveRecord::Migration[7.0]
       t.integer :gia
       t.integer :ddd
       t.integer :siafi
-      t.references :customer, null: false, foreign_key: true
+      t.references :customer, null: false, foreign_key: true, index: true
 
       t.timestamps
     end

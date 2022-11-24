@@ -3,21 +3,33 @@
 require 'json'
 
 class CustomerAddress
-  def get_by_zip_code(zip_code)
-    return false if zip_code.blank?
+  HASH_MAPPING = {
+    'logradouro': 'public_place',
+    'complemento': 'complement',
+    'bairro': 'neighbourhood',
+    'localidade': 'locality'
+  }.with_indifferent_access.freeze
 
-    response = RestClient.get("#{BASE_URL}/#{format('%08d', zip_code)}/json/")
-    address = JSON.parse(response)
-    address['erro'].present? ? nil : rename_address_keys(address)
+  BASE_URL = 'https://viacep.com.br/ws'
+
+  def get_by_cep(cep)
+    return false if cep.blank?
+
+    begin
+      response = RestClient.get("#{BASE_URL}/#{cep}/json")
+      address = JSON.parse(response)
+      rename_address_keys(address) if address['erro'].blank?
+    rescue Exception => e
+      puts "CustomerAddressService Crashed! \n Backrace: #{e.message.backtrace.join('\n')}"
+    end
   end
 
   private
 
   def rename_address_keys(address)
-    address['public_place'] = address.delete('logradouro')
-    address['complement'] = address.delete('complemento')
-    address['neighbourhood'] = address.delete('bairro')
-    address['locality'] = address.delete('localidade')
+    address.keys.each do |key|
+      address[HASH_MAPPING[key]] = address.delete(key) if HASH_MAPPING[key].present?
+    end
     address.delete('cep')
     address
   end
