@@ -1,24 +1,47 @@
-# README
+# Poject Name
+Spocket CO
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Description
 
-Things you may want to cover:
+The following are the endpoints that are supported
+- Endpoint to receive a list of customers data.
+- Will store the address for each customer after finding it.
 
-* Ruby version
+# System Architecture
 
-* System dependencies
+- An endpoint to accepts a list of customers having zip-code as JSON.
+- In a background worker, it will find the address for each customers whose address is not yet stored.
 
-* Configuration
+Advantages:
+- Faster API's
+- consistence results
 
-* Database creation
+Drawbacks:
+- More dependency on viacep API
 
-* Database initialization
+# Stack
 
-* How to run the test suite
+* [Ruby](https://www.ruby-lang.org/en/)
+* [Ruby on Rails](https://rubyonrails.org/)
+* [RSpec](https://github.com/rspec/rspec-rails)
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+------------
 
-* ...
+## Getting Started
+
+To get a local copy up and running follow these simple steps.
+
+### Prerequisites
+
+* `ruby 3.1.2`
+* `rails 7.0.4`
+
+### Installation
+
+1. Extract the repo
+2. Install the gems
+`bundle install`
+3. Start the server
+`rails s`
+4. Send the list
