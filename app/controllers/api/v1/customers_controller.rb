@@ -3,6 +3,7 @@
 module Api
   module V1
     class CustomersController < ApplicationController
+
       def insert_customers
         Customer.insert_all(customer_params)
         FetchCustomersAddress.perform_async

@@ -6,9 +6,4 @@ RSpec.describe Address, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:customer) }
   end
-
-  describe 'validations' do
-    it { is_expected.to validate_presence_of(:content) }
-    it { is_expected.to validate_length_of(:content).is_at_most(100) }
-  end
 end

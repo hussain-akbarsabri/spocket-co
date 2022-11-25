@@ -10,7 +10,7 @@ RSpec.describe Customer, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:cep) }
-    # it { should validates_length_of(:cep) }
-    # it { should validate_numericality_of(:cep) }
+    it { should validate_length_of(:cep) }
+    it { should validate_numericality_of(:cep) }
   end
 end

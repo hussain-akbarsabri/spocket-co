@@ -3,7 +3,7 @@
 require 'json'
 
 class CustomerAddress
-  HASH_MAPPING = {
+  TRANSLATION_MAPPING = {
     'logradouro': 'public_place',
     'complemento': 'complement',
     'bairro': 'neighbourhood',
@@ -20,7 +20,7 @@ class CustomerAddress
       address = JSON.parse(response)
       rename_address_keys(address) if address['erro'].blank?
     rescue Exception => e
-      puts "CustomerAddressService Crashed! \n Backrace: #{e.message.backtrace.join('\n')}"
+      Rails.logger.debug "CustomerAddressService Crashed! \n Backrace: #{e.message.backtrace.join('\n')}"
     end
   end
 
@@ -28,7 +28,7 @@ class CustomerAddress
 
   def rename_address_keys(address)
     address.keys.each do |key|
-      address[HASH_MAPPING[key]] = address.delete(key) if HASH_MAPPING[key].present?
+      address[TRANSLATION_MAPPING[key]] = address.delete(key) if TRANSLATION_MAPPING[key].present?
     end
     address.delete('cep')
     address

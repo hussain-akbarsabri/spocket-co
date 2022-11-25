@@ -15,18 +15,22 @@ module ErrorHandler
       Rails.logger.info e
       flat_messages = e&.record&.errors&.map { |k, v| { k => v } }&.reduce({}, :merge)
       json = error_json(:unprocessable_entity, e, errors: flat_messages || e&.message)
-      render json: json, status: :unprocessable_entity
+      render json:, status: :unprocessable_entity
     end
 
     rescue_from ActiveRecord::RecordNotFound do |e|
       respond(:not_found, e)
+    end
+
+    rescue_from ActiveRecord::UnknownAttributeError do |e|
+      render json: { e:, error: false }
     end
   end
 
   private
 
   def respond(status, message)
-    render json: error_json(status, message), status: status
+    render json: error_json(status, message), status:
   end
 
   def code_name_by_status(status)
