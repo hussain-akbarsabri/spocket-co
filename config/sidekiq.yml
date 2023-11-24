@@ -1,0 +1,11 @@
+:max_retries: 5
+development:
+  :concurrency: 5
+production:
+  :concurrency: 5
+:queues:
+  - default
+:schedule:
+  fetch_customers_address:
+    cron: '*/10 * * * *'
+    class: FetchCustomersAddress
